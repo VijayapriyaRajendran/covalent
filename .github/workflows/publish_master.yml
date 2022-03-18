@@ -62,12 +62,12 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build and push image for testing
         run: |
-          docker build -t ${{ secrets.AWS_ECR_TEST_REPO }} .
-          docker push ${{ secrets.AWS_ECR_TEST_REPO }}
+          docker build -t ${{ secrets.AWS_ECR_DEV_TEST_REPO }} .
+          docker push ${{ secrets.AWS_ECR_DEV_TEST_REPO }}
       - name: Run image
         run: |
-          docker pull ${{ secrets.AWS_ECR_TEST_REPO }}
-          docker run -d -p 48008:8080 ${{ secrets.AWS_ECR_TEST_REPO }}
+          docker pull ${{ secrets.AWS_ECR_DEV_TEST_REPO }}
+          docker run -d -p 48008:8080 ${{ secrets.AWS_ECR_DEV_TEST_REPO }}
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           echo 'Running an example dispatch...'
