@@ -52,7 +52,6 @@ else:
 dispatch_id = ct.dispatch(simple_workflow, dispatcher_addr='localhost:48008')("Hello", "Covalent")
 results_url = "http://localhost:48008/api/results"
 results = request("GET", results_url, headers={}, data={}).json()
-time.sleep(15)
 dispatch_result = results[0]['result']
 dispatch_status = results[0]['status']
 print(f'Dispatch {dispatch_id} was executed successfully with status: {dispatch_status}')
