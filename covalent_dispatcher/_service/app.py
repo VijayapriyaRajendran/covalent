@@ -18,6 +18,7 @@
 #
 # Relief from the License may be granted by purchasing a commercial license.
 
+from typing import Union
 import cloudpickle as pickle
 from flask import Blueprint, Flask, Response, jsonify, request
 
@@ -28,6 +29,21 @@ bp = Blueprint("dispatcher", __name__, url_prefix="/api")
 
 app_log = logger.app_log
 
+def check_empty_post() -> Union[Response, None]:
+    """
+    Function to check if a request has empty body
+
+    Args:
+        None
+    Returns:
+        Reponse: An Http status code 400 if body of the post request is empty.
+        None: Otherwise.
+    """
+    if request.method == "POST" and not request.content_length:
+        return Response(response='Empty request body.', status=400)
+    return None
+
+bp.before_app_request(check_empty_post)
 
 @bp.route("/submit", methods=["POST"])
 def submit() -> Response:
